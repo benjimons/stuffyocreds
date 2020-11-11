@@ -1,0 +1,25 @@
+import sys
+import os
+import glob
+
+mypath = sys.argv[1]
+myfiles = []
+
+os.system("mkdir /tmp/credstuff/")
+os.system("mkdir /tmp/credstuff/gzips")
+os.system("mkdir /tmp/credstuff/toprocess")
+
+for root, dirs, files in os.walk(mypath):
+        for file in files:
+                myfiles.append(os.path.join(root, file))
+        print(len(myfiles))
+
+for x in myfiles:
+        os.system("rm -R /tmp/credstuff/gzips/*")
+        os.system("rm -R /tmp/credstuff/toprocess/*")
+
+        os.system("cp '"+x+"' /tmp/credstuff/gzips/")
+        myfile = glob.glob("/tmp/credstuff/gzips/*")[0]
+        os.system("tar xvzf '"+myfile+ "' -C /tmp/credstuff/toprocess/")
+
+        os.system("rm -R /tmp/credstuff/gzips/*")
